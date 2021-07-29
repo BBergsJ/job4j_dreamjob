@@ -53,7 +53,10 @@
                                     <img src="<c:url value='/download?name=${image}'/>" width="100px" height="100px"/>
                                 </td>
                                 <td>
-
+                                    <a href="<c:url value='/candidate/photoUpload.jsp?id=${candidate.id}'/>">Add</a></td>
+                                </td>
+                                <td>
+                                    <a href="<c:url value='/download?name=${image}'/>">Delete</a></td>
                                 </td>
                             </tr>
                         </c:forEach>
