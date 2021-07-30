@@ -50,7 +50,7 @@
                                     <c:out value="${candidate.name}"/>
                                 </td>
                                 <td>
-                                    <img src="<c:url value='/download?name=${image}'/>" width="100px" height="100px"/>
+                                    <img src="<c:url value='/download?name=${candidate.id}'/>" width="100px" height="100px"/>
                                 </td>
                                 <td>
                                     <a href="<c:url value='/candidate/photoUpload.jsp?id=${candidate.id}'/>">Add</a></td>

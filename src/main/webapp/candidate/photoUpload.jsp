@@ -19,12 +19,13 @@
 </head>
 <body>
     <h2>Upload image</h2>
-    <form action="<c:url value='/upload'/>" method="post" enctype="multipart/form-data">
-        <div class="checkbox">
-            <input type="file" name="file">
-        </div>
-        <button type="submit" class="btn btn-default">Submit</button>
-    </form>
+    <div class="form">
+
+        <form method="post" enctype="multipart/form-data" action="<c:url value="/upload?id=${id}" />">
+            Choose a file: <input type="file" name="file"/>
+            <br/>
+            <input type="submit" value="Upload"/>
+        </form>
 
 </body>
 </html>
