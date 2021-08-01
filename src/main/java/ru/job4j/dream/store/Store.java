@@ -59,4 +59,8 @@ public class Store {
     public Candidate findCandidateById(int id) {
         return candidates.get(id);
     }
+
+    public void deleteCandidateById(int id) {
+        candidates.keySet().removeIf(k -> k.equals(id));
+    }
 }
