@@ -26,7 +26,6 @@
 </head>
 <body>
 <div class="container pt-3">
-
     <div class="row">
         <div class="card" style="width: 100%">
             <div class="card-header">
@@ -50,13 +49,16 @@
                                     <c:out value="${candidate.name}"/>
                                 </td>
                                 <td>
-                                    <img src="<c:url value='/download?name=${candidate.id}'/>" width="100px" height="100px"/>
-                                </td>
-                                <td>
-                                    <a href="<c:url value='/candidate/photoUpload.jsp?id=${candidate.id}'/>">Add</a></td>
-                                </td>
-                                <td>
-                                    <a href="<c:url value='/download?name=${image}'/>">Delete</a></td>
+                                    <p>
+                                    <img src="<c:url value='/uploadImage.do?name=${candidate.id}'/>" width="150px" height="150px"/>
+                                    </p>
+
+                                        <a href="<c:url value='/candidate/photoUpload.jsp?id=${candidate.id}'/>"
+                                           role="button" class="btn btn-primary btn-sm">Добавить
+                                        </a>
+                                        <a href="<c:url value='/deleteImage.do?id=${candidate.id}'/>"
+                                           role="button" class="btn btn-primary btn-sm">Удалить
+                                        </a>
                                 </td>
                             </tr>
                         </c:forEach>
