@@ -25,6 +25,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <body>
+
 <div class="container pt-3">
     <div class="row">
         <div class="card" style="width: 100%">
@@ -32,7 +33,7 @@
                 <h2>Загрузка фотографии</h2>
             </div>
             <div class="card-body">
-                <form action="<c:url value='/uploadImage.do?id=${id}'/>" method="post" enctype="multipart/form-data">
+                <form action="<c:url value='/uploadImage.do?id=${param.id}'/>" method="post" enctype="multipart/form-data">
                     <div class="checkbox">
                         <input type="file" name="file">
                     </div>

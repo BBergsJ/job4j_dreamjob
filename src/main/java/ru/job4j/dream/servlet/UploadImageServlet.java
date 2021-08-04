@@ -22,10 +22,10 @@ public class UploadImageServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String id = req.getParameter("id");
-        File downloadFile = null;
+        File downloadFile = new File("C:\\images\\0.jpg");
         for (File file : new File("C:\\images\\").listFiles()) {
             String fileName = file.getName();
-            if (id.equals(fileName.substring(0, fileName.indexOf(".")))) {
+            if (id.equals(fileName.substring(0, fileName.lastIndexOf('.')))) {
                 downloadFile = file;
                 break;
             }
