@@ -25,7 +25,7 @@ public class UploadImageServlet extends HttpServlet {
         File downloadFile = null;
         for (File file : new File("C:\\images\\").listFiles()) {
             String fileName = file.getName();
-            if (id.equals(fileName.substring(0, fileName.indexOf(".")))) {
+            if (id.equals(fileName.substring(0, fileName.lastIndexOf('.')))) {
                 downloadFile = file;
                 break;
             }
