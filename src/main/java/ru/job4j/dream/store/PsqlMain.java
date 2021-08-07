@@ -2,6 +2,8 @@ package ru.job4j.dream.store;
 
 import ru.job4j.dream.model.Post;
 
+import java.util.Optional;
+
 public class PsqlMain {
     public static void main(String[] args) {
         Store store = PsqlStore.instOf();
@@ -17,7 +19,11 @@ public class PsqlMain {
         }
 
         System.out.println(System.lineSeparator());
-        Post testPost = store.findById(1);
-        System.out.println(testPost.getId() + " " + testPost.getName());
+        Optional<Post> testPost = store.findPostById(50);
+        if (testPost.isPresent()) {
+            System.out.println(testPost.get().getId() + " " + testPost.get().getName());
+        } else {
+            System.out.println("Post is not found");
+        }
     }
 }

@@ -1,6 +1,8 @@
 package ru.job4j.dream.store;
 
 import org.apache.commons.dbcp2.BasicDataSource;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import ru.job4j.dream.model.Candidate;
 import ru.job4j.dream.model.Post;
 
@@ -9,14 +11,12 @@ import java.io.FileReader;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Properties;
+import java.util.*;
 
 public class PsqlStore implements Store {
 
     private final BasicDataSource pool = new BasicDataSource();
+    private static final Logger LOG = LoggerFactory.getLogger(PsqlStore.class.getName());
 
     private PsqlStore() {
         Properties cfg = new Properties();
@@ -25,12 +25,12 @@ public class PsqlStore implements Store {
         )) {
             cfg.load(io);
         } catch (Exception e) {
-            throw new IllegalStateException(e);
+            LOG.error("Exception: ", e);
         }
         try {
             Class.forName(cfg.getProperty("jdbc.driver"));
         } catch (Exception e) {
-            throw new IllegalStateException(e);
+            LOG.error("Exception: ", e);
         }
         pool.setDriverClassName(cfg.getProperty("jdbc.driver"));
         pool.setUrl(cfg.getProperty("jdbc.url"));
@@ -61,7 +61,7 @@ public class PsqlStore implements Store {
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            LOG.error("Exception: ", e);
         }
         return posts;
     }
@@ -78,7 +78,7 @@ public class PsqlStore implements Store {
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            LOG.error("Exception: ", e);
         }
         return candidates;
     }
@@ -112,7 +112,7 @@ public class PsqlStore implements Store {
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            LOG.error("Exception: ", e);
         }
         return post;
     }
@@ -130,7 +130,7 @@ public class PsqlStore implements Store {
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            LOG.error("Exception: ", e);
         }
         return candidate;
     }
@@ -142,7 +142,7 @@ public class PsqlStore implements Store {
             ps.setInt(2, post.getId());
             ps.executeUpdate();
         } catch (Exception e) {
-            e.printStackTrace();
+            LOG.error("Exception: ", e);
         }
     }
 
@@ -153,24 +153,41 @@ public class PsqlStore implements Store {
             ps.setInt(2, candidate.getId());
             ps.executeUpdate();
         } catch (Exception e) {
-            e.printStackTrace();
+            LOG.error("Exception: ", e);
         }
     }
 
     @Override
-    public Post findById(int id) {
-        Post post = new Post(0, "EMPTY");
+    public Optional<Post> findPostById(int id) {
+        Optional<Post> post = Optional.empty();
         try (Connection cn = pool.getConnection();
         PreparedStatement ps = cn.prepareStatement("SELECT name FROM post WHERE id = ?")) {
             ps.setInt(1, id);
             try (ResultSet it = ps.executeQuery()) {
                 if (it.next()) {
-                    post = new Post(id, it.getString("name"));
+                    post = Optional.of(new Post(id, it.getString("name")));
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            LOG.error("Exception: ", e);
         }
         return post;
+    }
+
+    @Override
+    public Optional<Candidate> findCandidateById(int id) {
+        Optional<Candidate> candidate = Optional.empty();
+        try (Connection cn = pool.getConnection();
+             PreparedStatement ps = cn.prepareStatement("SELECT name FROM candidate WHERE id = ?")) {
+            ps.setInt(1, id);
+            try (ResultSet it = ps.executeQuery()) {
+                if (it.next()) {
+                    candidate = Optional.of(new Candidate(id, it.getString("name")));
+                }
+            }
+        } catch (Exception e) {
+            LOG.error("Exception: ", e);
+        }
+        return candidate;
     }
 }
