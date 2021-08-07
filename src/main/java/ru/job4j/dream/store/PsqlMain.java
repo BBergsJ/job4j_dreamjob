@@ -9,5 +9,15 @@ public class PsqlMain {
         for (Post post : store.findAllPosts()) {
             System.out.println(post.getId() + " " + post.getName());
         }
+
+        System.out.println(System.lineSeparator());
+        store.save(new Post(1, "New Java Job"));
+        for (Post post : store.findAllPosts()) {
+            System.out.println(post.getId() + " " + post.getName());
+        }
+
+        System.out.println(System.lineSeparator());
+        Post testPost = store.findById(1);
+        System.out.println(testPost.getId() + " " + testPost.getName());
     }
 }
