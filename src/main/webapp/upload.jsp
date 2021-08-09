@@ -11,7 +11,31 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
 </head>
 <body>
-
+<div class="container">
+    <div class="row">
+        <ul class="nav">
+            <li class="nav-item">
+                <a class="nav-link" href="<%=request.getContextPath()%>/posts.do">Вакансии</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="<%=request.getContextPath()%>/candidates.do">Кандидаты</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="<%=request.getContextPath()%>/post/edit.jsp">Добавить вакансию</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="<%=request.getContextPath()%>/candidate/edit.jsp">Добавить кандидата</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="<%=request.getContextPath()%>/login.jsp"><c:out value="${user.name}"/></a>
+                <c:if test="${user != null}">
+            <li class="nav-item">
+                <a class="nav-link" href="<%=request.getContextPath()%>/logout.do"> | Выйти</a>
+            </li>
+            </c:if>
+            </li>
+        </ul>
+    </div>
 <div class="container">
     <table class="table">
         <thead>
@@ -39,6 +63,6 @@
         <button type="submit" class="btn btn-default">Submit</button>
     </form>
 </div>
-
+</div>
 </body>
 </html>

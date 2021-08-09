@@ -1,6 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%@ page import="ru.job4j.dream.store.PsqlStore" %>
 <%@ page import="ru.job4j.dream.model.Post" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jstl/core" %>
 <!doctype html>
 <html lang="en">
 <head>
@@ -31,6 +32,31 @@
         post = (PsqlStore.instOf().findPostById(Integer.valueOf(id))).get();
     }
 %>
+<div class="container">
+    <div class="row">
+        <ul class="nav">
+            <li class="nav-item">
+                <a class="nav-link" href="<%=request.getContextPath()%>/posts.do">Вакансии</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="<%=request.getContextPath()%>/candidates.do">Кандидаты</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="<%=request.getContextPath()%>/post/edit.jsp">Добавить вакансию</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="<%=request.getContextPath()%>/candidate/edit.jsp">Добавить кандидата</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="<%=request.getContextPath()%>/login.jsp"><c:out value="${user.name}"/></a>
+                <c:if test="${user != null}">
+            <li class="nav-item">
+                <a class="nav-link" href="<%=request.getContextPath()%>/logout.do"> | Выйти</a>
+            </li>
+            </c:if>
+            </li>
+        </ul>
+    </div>
 <div class="container pt-3">
     <div class="row">
         <div class="card" style="width: 100%">
@@ -52,6 +78,7 @@
             </div>
         </div>
     </div>
+</div>
 </div>
 </body>
 </html>
