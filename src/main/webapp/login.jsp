@@ -40,7 +40,7 @@
                     <button type="submit" class="btn btn-primary">Войти</button>
                     <c:if test="${not empty error}">
                         <div style="color:#ff0000; font-weight: bold; margin: 30px 0;">
-                                ${error}
+                            <c:out value="${error}"/>
                         </div>
                     </c:if>
                 </form>
