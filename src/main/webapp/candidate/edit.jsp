@@ -50,12 +50,12 @@
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="<%=request.getContextPath()%>/login.jsp"><c:out value="${user.name}"/></a>
-                <c:if test="${user != null}">
-            <li class="nav-item">
-                <a class="nav-link" href="<%=request.getContextPath()%>/logout.do"> | Выйти</a>
             </li>
+            <c:if test="${user != null}">
+                <li class="nav-item">
+                    <a class="nav-link" href="<%=request.getContextPath()%>/logout.do"> | Выйти</a>
+                </li>
             </c:if>
-            </li>
         </ul>
     </div>
 <div class="container pt-3">
