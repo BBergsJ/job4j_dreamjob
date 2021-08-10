@@ -5,6 +5,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ru.job4j.dream.model.Candidate;
 import ru.job4j.dream.model.Post;
+import ru.job4j.dream.model.User;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -200,5 +201,39 @@ public class PsqlStore implements Store {
         } catch (Exception e) {
             LOG.error("Exception: ", e);
         }
+    }
+
+    @Override
+    public Collection<User> findAllUsers() {
+        List<User> users = new ArrayList<>();
+        try (Connection cn = pool.getConnection();
+        PreparedStatement ps = cn.prepareStatement("SELECT * from reguser")) {
+            try (ResultSet resultSet = ps.executeQuery()) {
+                while (resultSet.next()) {
+                    users.add(new User(resultSet.getInt("id"),
+                            resultSet.getString("name"),
+                            resultSet.getString("email"),
+                            resultSet.getString("password")));
+                }
+            }
+        } catch (Exception e) {
+            LOG.error("Exception: ", e);
+        }
+        return users;
+    }
+
+    @Override
+    public void saveUser(User user) {
+
+    }
+
+    @Override
+    public Optional<User> findUserByEmail(String email) {
+        return Optional.empty();
+    }
+
+    @Override
+    public void deleteUserByEmail(String email) {
+
     }
 }
