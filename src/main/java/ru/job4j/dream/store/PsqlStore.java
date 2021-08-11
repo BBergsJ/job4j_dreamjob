@@ -224,16 +224,90 @@ public class PsqlStore implements Store {
 
     @Override
     public void saveUser(User user) {
+        if (user.getId() == 0) {
+            create(user);
+        } else {
+            update(user);
+        }
+    }
 
+    private User create(User user) {
+        try (Connection cn = pool.getConnection();
+        PreparedStatement preparedStatement = cn.prepareStatement(
+                "INSERT INTO reguser(name, email, password) VALUES (?)",
+                PreparedStatement.RETURN_GENERATED_KEYS)
+        ) {
+            preparedStatement.setString(1, user.getName());
+            preparedStatement.setString(2, user.getEmail());
+            preparedStatement.setString(3, user.getPassword());
+            preparedStatement.executeUpdate();
+            try (ResultSet id = preparedStatement.getGeneratedKeys()) {
+                if (id.next()) {
+                    user.setId(id.getInt(1));
+                }
+            }
+        } catch (Exception e) {
+            LOG.error("Exception: ", e);
+        }
+        return user;
+    }
+
+    private void update(User user) {
+        try (Connection cn = pool.getConnection();
+             PreparedStatement preparedStatement = cn.prepareStatement(
+                     "UPDATE reguser SET name = ?, email = ?, password = ? WHERE id = ?")) {
+            preparedStatement.setString(1, user.getName());
+            preparedStatement.setString(2, user.getEmail());
+            preparedStatement.setString(3, user.getPassword());
+            preparedStatement.setInt(4, user.getId());
+            preparedStatement.executeUpdate();
+        } catch (Exception e) {
+            LOG.error("Exception: ", e);
+        }
     }
 
     @Override
     public Optional<User> findUserByEmail(String email) {
-        return Optional.empty();
+        Optional<User> user = Optional.empty();
+        try (Connection cn = pool.getConnection();
+        PreparedStatement preparedStatement = cn.prepareStatement("SELECT email FROM reguser WHERE email = ?")) {
+            preparedStatement.setString(1, email);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    user = Optional.of(new User(
+                            resultSet.getInt("id"),
+                            resultSet.getString("name"),
+                            resultSet.getString("email"),
+                            resultSet.getString("password"))
+                    );
+                }
+            }
+        } catch (Exception e) {
+            LOG.error("Exception: ");
+        }
+        return user;
     }
 
     @Override
-    public void deleteUserByEmail(String email) {
+    public void deleteUserById(int id) {
+        try (Connection cn = pool.getConnection();
+        PreparedStatement preparedStatement = cn.prepareStatement("DELETE FROM reguser WHERE id = ?")) {
+            preparedStatement.setInt(1, id);
+            preparedStatement.executeUpdate();
+        } catch (Exception e) {
+            LOG.error("Exception: ");
+        }
+    }
 
+    @Override
+    public void changePassword(int id, String password) {
+        try (Connection cn = pool.getConnection();
+             PreparedStatement preparedStatement = cn.prepareStatement("UPDATE reguser SET password = ? WHERE id = ?")) {
+            preparedStatement.setString(1, password);
+            preparedStatement.setInt(2, id);
+            preparedStatement.executeUpdate();
+        } catch (Exception e) {
+            LOG.error("Exception: ");
+        }
     }
 }

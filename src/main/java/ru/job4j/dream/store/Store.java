@@ -28,5 +28,7 @@ public interface Store {
 
     Optional<User> findUserByEmail(String email);
 
-    void deleteUserByEmail(String email);
+    void deleteUserById(int id);
+
+    void changePassword(int id, String password);
 }
