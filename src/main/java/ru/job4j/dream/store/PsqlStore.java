@@ -26,12 +26,12 @@ public class PsqlStore implements Store {
         )) {
             cfg.load(io);
         } catch (Exception e) {
-            LOG.error("Exception: " + e.getMessage(), e);
+            LOG.error("Exception occurred: " + e.getMessage(), e);
         }
         try {
             Class.forName(cfg.getProperty("jdbc.driver"));
         } catch (Exception e) {
-            LOG.error("Exception: " + e.getMessage(), e);
+            LOG.error("Exception occurred: " + e.getMessage(), e);
         }
         pool.setDriverClassName(cfg.getProperty("jdbc.driver"));
         pool.setUrl(cfg.getProperty("jdbc.url"));
@@ -62,7 +62,7 @@ public class PsqlStore implements Store {
                 }
             }
         } catch (Exception e) {
-            LOG.error("Exception: " + e.getMessage(), e);
+            LOG.error("Exception occurred: " + e.getMessage(), e);
         }
         return posts;
     }
@@ -79,7 +79,7 @@ public class PsqlStore implements Store {
                 }
             }
         } catch (Exception e) {
-            LOG.error("Exception: " + e.getMessage(), e);
+            LOG.error("Exception occurred: " + e.getMessage(), e);
         }
         return candidates;
     }
@@ -113,7 +113,7 @@ public class PsqlStore implements Store {
                 }
             }
         } catch (Exception e) {
-            LOG.error("Exception: " + e.getMessage(), e);
+            LOG.error("Exception occurred: " + e.getMessage(), e);
         }
         return post;
     }
@@ -131,7 +131,7 @@ public class PsqlStore implements Store {
                 }
             }
         } catch (Exception e) {
-            LOG.error("Exception: " + e.getMessage(), e);
+            LOG.error("Exception occurred: " + e.getMessage(), e);
         }
         return candidate;
     }
@@ -143,7 +143,7 @@ public class PsqlStore implements Store {
             ps.setInt(2, post.getId());
             ps.executeUpdate();
         } catch (Exception e) {
-            LOG.error("Exception: " + e.getMessage(), e);
+            LOG.error("Exception occurred: " + e.getMessage(), e);
         }
     }
 
@@ -154,7 +154,7 @@ public class PsqlStore implements Store {
             ps.setInt(2, candidate.getId());
             ps.executeUpdate();
         } catch (Exception e) {
-            LOG.error("Exception: " + e.getMessage(), e);
+            LOG.error("Exception occurred: " + e.getMessage(), e);
         }
     }
 
@@ -170,7 +170,7 @@ public class PsqlStore implements Store {
                 }
             }
         } catch (Exception e) {
-            LOG.error("Exception: " + e.getMessage(), e);
+            LOG.error("Exception occurred: " + e.getMessage(), e);
         }
         return post;
     }
@@ -187,7 +187,7 @@ public class PsqlStore implements Store {
                 }
             }
         } catch (Exception e) {
-            LOG.error("Exception: " + e.getMessage(), e);
+            LOG.error("Exception occurred: " + e.getMessage(), e);
         }
         return candidate;
     }
@@ -199,7 +199,7 @@ public class PsqlStore implements Store {
             ps.setInt(1, id);
             ps.executeUpdate();
         } catch (Exception e) {
-            LOG.error("Exception: " + e.getMessage(), e);
+            LOG.error("Exception occurred: " + e.getMessage(), e);
         }
     }
 
@@ -217,7 +217,7 @@ public class PsqlStore implements Store {
                 }
             }
         } catch (Exception e) {
-            LOG.error("Exception: " + e.getMessage(), e);
+            LOG.error("Exception occurred: " + e.getMessage(), e);
         }
         return users;
     }
@@ -247,7 +247,7 @@ public class PsqlStore implements Store {
                 }
             }
         } catch (Exception e) {
-            LOG.error("Exception: " + e.getMessage(), e);
+            LOG.error("Exception occurred: " + e.getMessage(), e);
         }
         return user;
     }
@@ -262,7 +262,7 @@ public class PsqlStore implements Store {
             preparedStatement.setInt(4, user.getId());
             preparedStatement.executeUpdate();
         } catch (Exception e) {
-            LOG.error("Exception: " + e.getMessage(), e);
+            LOG.error("Exception occurred: " + e.getMessage(), e);
         }
     }
 
@@ -283,7 +283,7 @@ public class PsqlStore implements Store {
                 }
             }
         } catch (Exception e) {
-            LOG.error("Exception: " + e.getMessage(), e);
+            LOG.error("Exception occurred: " + e.getMessage(), e);
         }
         return user;
     }
@@ -295,7 +295,7 @@ public class PsqlStore implements Store {
             preparedStatement.setInt(1, id);
             preparedStatement.executeUpdate();
         } catch (Exception e) {
-            LOG.error("Exception: " + e.getMessage(), e);
+            LOG.error("Exception occurred: " + e.getMessage(), e);
         }
     }
 
@@ -307,7 +307,7 @@ public class PsqlStore implements Store {
             preparedStatement.setInt(2, id);
             preparedStatement.executeUpdate();
         } catch (Exception e) {
-            LOG.error("Exception: " + e.getMessage(), e);
+            LOG.error("Exception occurred: " + e.getMessage(), e);
         }
     }
 }
