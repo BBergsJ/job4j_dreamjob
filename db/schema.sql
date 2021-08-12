@@ -11,6 +11,6 @@ CREATE TABLE IF NOT EXISTS candidate (
 CREATE TABLE IF NOT EXISTS regUser (
     id SERIAL PRIMARY KEY,
     name TEXT,
-    email TEXT,
+    email TEXT CONSTRAINT user_email_key UNIQUE,
     password TEXT
 );
