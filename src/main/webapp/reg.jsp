@@ -27,7 +27,17 @@
                 Регистрация нового пользователя:
             </div>
             <div class="card-body">
-
+                <form action="<%=request.getContextPath()%>/reg.do" method="post">
+                    <div class="form-group">
+                        <label>Имя пользователя :</label>
+                        <input type="text" class="form-control" name="name">
+                        <label>Почта :</label>
+                        <input type="text" class="form-control" name="email">
+                        <label>Пароль : </label>
+                        <input type="text" class="form-control" name="password">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Сохранить</button>
+                </form>
             </div>
         </div>
     </div>

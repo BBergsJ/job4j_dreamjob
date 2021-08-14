@@ -234,7 +234,7 @@ public class PsqlStore implements Store {
     private User create(User user) {
         try (Connection cn = pool.getConnection();
         PreparedStatement preparedStatement = cn.prepareStatement(
-                "INSERT INTO reguser(name, email, password) VALUES (?)",
+                "INSERT INTO reguser(name, email, password) VALUES (?, ?, ?)",
                 PreparedStatement.RETURN_GENERATED_KEYS)
         ) {
             preparedStatement.setString(1, user.getName());
@@ -270,7 +270,7 @@ public class PsqlStore implements Store {
     public Optional<User> findUserByEmail(String email) {
         Optional<User> user = Optional.empty();
         try (Connection cn = pool.getConnection();
-        PreparedStatement preparedStatement = cn.prepareStatement("SELECT email FROM reguser WHERE email = ?")) {
+        PreparedStatement preparedStatement = cn.prepareStatement("SELECT * FROM reguser WHERE email = ?")) {
             preparedStatement.setString(1, email);
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 if (resultSet.next()) {
