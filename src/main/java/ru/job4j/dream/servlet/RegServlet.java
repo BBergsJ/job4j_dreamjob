@@ -16,6 +16,10 @@ public class RegServlet extends HttpServlet {
         String name = req.getParameter("name");
         String email = req.getParameter("email");
         String password = req.getParameter("password");
+        if (PsqlStore.instOf().findUserByEmail(email).isPresent()) {
+            req.setAttribute("error", "Пользователь с этой почтой уже зарегистрирован");
+            req.getRequestDispatcher("reg.jsp").forward(req, resp);
+        }
         PsqlStore.instOf().saveUser(new User(
                 0,
                 req.getParameter("name"),

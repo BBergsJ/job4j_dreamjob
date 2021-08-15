@@ -37,6 +37,11 @@
                         <input type="text" class="form-control" name="password">
                     </div>
                     <button type="submit" class="btn btn-primary">Сохранить</button>
+                    <c:if test="${not empty error}">
+                        <div style="color:#ff0000; font-weight: bold; margin: 30px 0;">
+                            <c:out value="${error}"/>
+                        </div>
+                    </c:if>
                 </form>
             </div>
         </div>
