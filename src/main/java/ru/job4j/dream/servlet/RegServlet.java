@@ -19,13 +19,14 @@ public class RegServlet extends HttpServlet {
         if (PsqlStore.instOf().findUserByEmail(email).isPresent()) {
             req.setAttribute("error", "Пользователь с этой почтой уже зарегистрирован");
             req.getRequestDispatcher("reg.jsp").forward(req, resp);
+        } else {
+            PsqlStore.instOf().saveUser(new User(
+                    0,
+                    req.getParameter("name"),
+                    req.getParameter("email"),
+                    req.getParameter("password"))
+            );
+            resp.sendRedirect(req.getContextPath() + "/login.jsp");
         }
-        PsqlStore.instOf().saveUser(new User(
-                0,
-                req.getParameter("name"),
-                req.getParameter("email"),
-                req.getParameter("password"))
-        );
-        resp.sendRedirect(req.getContextPath() + "/login.jsp");
     }
 }
