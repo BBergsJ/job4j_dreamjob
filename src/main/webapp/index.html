@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Bootstrap Example</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<div class="container-fluid">
+    <h1>My First Bootstrap Page</h1>
+    <p>This is some text.</p>
+
+    <form><br>
+        <div class="form-group row">
+            <label for="name" class="col-sm-1 col-form-label">Имя:</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="name" placeholder="Имя">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="surname" class="col-sm-1 col-form-label">Фамилия:</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="surname" placeholder="Фамилия">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="address" class="col-sm-1 col-form-label">Адрес:</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="address" placeholder="Адрес">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="my-1 mr-2" for="inlineFormCustomSelectPref">Выберите пол: </label>
+                <select class="custom-select my-1 mr-sm-2" id="inlineFormCustomSelectPref">
+                    <option selected>Пол:</option>
+                    <option value="1">М</option>
+                    <option value="2">Ж</option>
+                </select>
+        </div>
+
+        <div class="form-group">
+            <label for="exampleFormControlTextarea1">Описание:</label>
+            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+        </div>
+
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Имя</th>
+                <th scope="col">Фамилия</th>
+                <th scope="col">Пол</th>
+                <th scope="col">Описание</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <th scope="row">1</th>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <th scope="row">2</th>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <th scope="row">3</th>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            </tbody>
+        </table>
+
+        <button type="submit" class="btn btn-primary">Подтвердить</button>
+    </form>
+</div>
+
+</body>
+</html>
