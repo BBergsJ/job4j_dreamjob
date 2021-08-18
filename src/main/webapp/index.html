@@ -8,11 +8,26 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script>
-        function validate() {
+        function addRow() {
+            if (validate()) {
+                const name = $('#name').val();
+                const surname = $('#surname').val();
+                const address = $('#address').val();
+                const about = $('#about').val();
+
+                $('#table tr:last').after('<tr>' +
+                    '<td>' + name + '</td>' +
+                    '<td>' + surname + '</td>' +
+                    '<td>' + address + '</td>' +
+                    '<td>' + about + '</td>' +
+                    '</tr>');
+            }
+    }
+
+    function validate() {
             var name = $('#name');
             var surname = $('#surname');
             var address = $('#address');
-            var sex = $('#sex');
             var about = $('#about');
             if (name.val() === '') {
                 alert("Not filled: " + name.attr('id'));
@@ -24,10 +39,6 @@
             }
             if (address.val() === '') {
                 alert("Not filled: " + address.attr("id"));
-                return false;
-            }
-            if (sex.val() === '') {
-                alert("Not filled: " + sex.attr("id"));
                 return false;
             }
             if (about.val() === '') {
@@ -78,10 +89,9 @@
             <textarea class="form-control" id="about" rows="3"></textarea>
         </div>
 
-        <table class="table table-striped">
+        <table class="table table-striped" id="table">
             <thead>
             <tr>
-                <th scope="col">#</th>
                 <th scope="col">Имя</th>
                 <th scope="col">Фамилия</th>
                 <th scope="col">Пол</th>
@@ -89,31 +99,10 @@
             </tr>
             </thead>
             <tbody>
-            <tr>
-                <th scope="row">1</th>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-            </tr>
-            <tr>
-                <th scope="row">2</th>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-            </tr>
-            <tr>
-                <th scope="row">3</th>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-            </tr>
             </tbody>
         </table>
-
-        <button type="submit" class="btn btn-primary" onclick="return validate();">Подтвердить</button>
+        <button type="button" class="btn btn-default" onclick="addRow()">Добавить строку в таблицу</button><br>
+        <br><button type="submit" class="btn btn-primary" onclick="return validate();">Подтвердить</button>
     </form>
 </div>
 
