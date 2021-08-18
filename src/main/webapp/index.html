@@ -7,6 +7,36 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script>
+        function validate() {
+            var name = $('#name');
+            var surname = $('#surname');
+            var address = $('#address');
+            var sex = $('#sex');
+            var about = $('#about');
+            if (name.val() === '') {
+                alert("Not filled: " + name.attr('id'));
+                return false;
+            }
+            if (surname.val() === '') {
+                alert("Not filled: " + surname.attr("id"));
+                return false;
+            }
+            if (address.val() === '') {
+                alert("Not filled: " + address.attr("id"));
+                return false;
+            }
+            if (sex.val() === '') {
+                alert("Not filled: " + sex.attr("id"));
+                return false;
+            }
+            if (about.val() === '') {
+                alert("Not filled: " + about.attr("id"));
+                return false;
+            }
+            return true;
+        }
+    </script>
 </head>
 <body>
 
@@ -18,7 +48,7 @@
         <div class="form-group row">
             <label for="name" class="col-sm-1 col-form-label">Имя:</label>
             <div class="col-sm-10">
-                <input type="text" class="form-control" id="name" placeholder="Имя">
+                <input type="text" class="form-control" id="name" placeholder="Имя" title="Enter user name.">
             </div>
         </div>
         <div class="form-group row">
@@ -35,8 +65,8 @@
         </div>
 
         <div class="form-group">
-            <label class="my-1 mr-2" for="inlineFormCustomSelectPref">Выберите пол: </label>
-                <select class="custom-select my-1 mr-sm-2" id="inlineFormCustomSelectPref">
+            <label class="my-1 mr-2" for="sex">Выберите пол: </label>
+                <select class="custom-select my-1 mr-sm-2" id="sex">
                     <option selected>Пол:</option>
                     <option value="1">М</option>
                     <option value="2">Ж</option>
@@ -44,8 +74,8 @@
         </div>
 
         <div class="form-group">
-            <label for="exampleFormControlTextarea1">Описание:</label>
-            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+            <label for="about">Описание:</label>
+            <textarea class="form-control" id="about" rows="3"></textarea>
         </div>
 
         <table class="table table-striped">
@@ -83,7 +113,7 @@
             </tbody>
         </table>
 
-        <button type="submit" class="btn btn-primary">Подтвердить</button>
+        <button type="submit" class="btn btn-primary" onclick="return validate();">Подтвердить</button>
     </form>
 </div>
 
