@@ -14,3 +14,10 @@ CREATE TABLE IF NOT EXISTS regUser (
     email TEXT CONSTRAINT user_email_key UNIQUE,
     password TEXT
 );
+
+CREATE TABLE IF NOT EXISTS city (
+    id SERIAL PRIMARY KEY,
+    name TEXT
+);
+
+ALTER TABLE candidate ADD COLUMN cityId INTEGER REFERENCES city(id);

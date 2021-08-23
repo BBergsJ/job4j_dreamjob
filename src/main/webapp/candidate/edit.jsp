@@ -24,11 +24,27 @@
             crossorigin="anonymous"></script>
 
     <title>Работа мечты</title>
+
+    <script>
+    function validate() {
+        const name = $('#name');
+        const cityId = $('#cityId');
+        if (name.val() === '') {
+        alert("Not filled: " + name.attr('id'));
+        return false;
+        }
+        if (cityId.val() === 0) {
+        alert("Not filled: " + cityId.attr("id"));
+        return false;
+        }
+        return true;
+    }
+    </script>
 </head>
 <body>
 <%
     String id = request.getParameter("id");
-    Candidate candidate = new Candidate(0, "");
+    Candidate candidate = new Candidate(0, "", 0);
     if (id != null) {
         candidate = (PsqlStore.instOf().findCandidateById(Integer.valueOf(id))).get();
     }
@@ -72,9 +88,19 @@
                 <form action="<%=request.getContextPath()%>/candidates.do?id=<%=candidate.getId()%>" method="post">
                     <div class="form-group">
                         <label>Имя</label>
-                        <input type="text" class="form-control" name="name" value="<%=candidate.getName()%>">
+                        <input type="text" class="form-control" name="name" value="<%=candidate.getName()%>" id="name">
                     </div>
-                    <button type="submit" class="btn btn-primary">Сохранить</button>
+                    <div class="form-group">
+                        <label for="cityId">Город</label>
+                        <select class="form-control" id="cityId" name="cityId">
+                            <c:forEach items="${cities}" var="city">
+                                <option value="${city.id}">
+                                    <c:out value="${city.name}"/>
+                                <option>
+                            </c:forEach>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary" onclick="return validate();">Сохранить</button>
                 </form>
             </div>
         </div>
