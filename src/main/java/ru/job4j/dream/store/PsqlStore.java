@@ -333,4 +333,61 @@ public class PsqlStore implements Store {
         }
         return cities;
     }
+
+    @Override
+    public Optional<City> findCityById(int id) {
+        Optional<City> city = Optional.empty();
+        try (Connection cn = pool.getConnection();
+             PreparedStatement ps = cn.prepareStatement("SELECT * FROM city WHERE id = ?")) {
+            ps.setInt(1, id);
+            try (ResultSet it = ps.executeQuery()) {
+                if (it.next()) {
+                    city = Optional.of(new City(id, it.getString("name")
+                    ));
+                }
+            }
+        } catch (Exception e) {
+            LOG.error("Exception occurred: " + e.getMessage(), e);
+        }
+        return city;
+    }
+
+    @Override
+    public Collection<Post> findPostsByDay() {
+        List<Post> posts = new ArrayList<>();
+        try (Connection cn = pool.getConnection();
+             PreparedStatement ps = cn.prepareStatement("SELECT * FROM post WHERE "
+                     + "dateCreated BETWEEN now() - INTERVAL '1 day' AND now()")
+        ) {
+            try (ResultSet resultSet = ps.executeQuery()) {
+                while (resultSet.next()) {
+                    posts.add(new Post(resultSet.getInt("id"),
+                            resultSet.getString("name")));
+                }
+            }
+        } catch (Exception e) {
+            LOG.error("Exception occurred: " + e.getMessage(), e);
+        }
+        return posts;
+    }
+
+    @Override
+    public Collection<Candidate> findCandidatesByDay() {
+        List<Candidate> candidates = new ArrayList<>();
+        try (Connection cn = pool.getConnection();
+             PreparedStatement ps = cn.prepareStatement("SELECT * FROM candidate WHERE "
+                     + "dateCreated BETWEEN now() - INTERVAL '1 day' AND now()")
+        ) {
+            try (ResultSet resultSet = ps.executeQuery()) {
+                while (resultSet.next()) {
+                    candidates.add(new Candidate(resultSet.getInt("id"),
+                            resultSet.getString("name"),
+                            resultSet.getInt("cityId")));
+                }
+            }
+        } catch (Exception e) {
+            LOG.error("Exception occurred: " + e.getMessage(), e);
+        }
+        return candidates;
+    }
 }

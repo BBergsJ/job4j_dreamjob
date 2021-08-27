@@ -18,6 +18,22 @@
             integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 
     <title>Работа мечты</title>
+
+    <script>
+        function validate() {
+            const email = $('#email');
+            const password = $('#password');
+            if (email.val() === '') {
+                alert("Not filled: " + email.attr('id'));
+                return false;
+            }
+            if (password.val() === '') {
+                alert("Not filled: " + password.attr("id"));
+                return false;
+            }
+            return true;
+        }
+    </script>
 </head>
 <body>
 <div class="container pt-3">
@@ -31,13 +47,13 @@
                 <form action="<%=request.getContextPath()%>/auth.do" method="post">
                     <div class="form-group">
                         <label>Почта</label>
-                        <input type="text" class="form-control" name="email">
+                        <input type="text" class="form-control" name="email" id="email">
                     </div>
                     <div class="form-group">
                         <label>Пароль</label>
-                        <input type="text" class="form-control" name="password">
+                        <input type="text" class="form-control" name="password" id="password">
                     </div>
-                    <button type="submit" class="btn btn-primary">Войти</button>
+                    <button type="submit" class="btn btn-primary" onclick="return validate();">Войти</button>
                     <a class="btn btn-primary" href="<%=request.getContextPath()%>/reg.jsp">Регистрация</a>
                     <c:if test="${not empty error}">
                         <div style="color:#ff0000; font-weight: bold; margin: 30px 0;">

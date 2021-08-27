@@ -21,3 +21,7 @@ CREATE TABLE IF NOT EXISTS city (
 );
 
 ALTER TABLE candidate ADD COLUMN cityId INTEGER REFERENCES city(id);
+
+alter table candidate add column dateCreated timestamp default current_timestamp;
+
+alter table post add column dateCreated timestamp default current_timestamp;

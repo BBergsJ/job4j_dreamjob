@@ -48,24 +48,59 @@
             </c:if>
         </ul>
     </div>
-    <div class="row">
+
+    <div class="row pt-3">
         <div class="card" style="width: 100%">
             <div class="card-header">
                 Сегодняшние вакансии.
             </div>
             <div class="card-body">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th scope="col">Названия</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <c:forEach items="${posts}" var="post">
+                        <tr>
+                            <td>
+                                <c:out value="${post.name}"/>
+                            </td>
+                        </tr>
+                    </c:forEach>
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
+
     <div class="row pt-3">
         <div class="card" style="width: 100%">
             <div class="card-header">
                 Сегодняшние кандидаты.
             </div>
             <div class="card-body">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th scope="col">Имя</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <c:forEach items="${candidates}" var="candidate">
+                        <tr>
+                            <td>
+                                <c:out value="${candidate.name}"/>
+                            </td>
+                        </tr>
+                    </c:forEach>
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
 </div>
+
 </body>
 </html>

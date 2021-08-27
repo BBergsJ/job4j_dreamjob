@@ -34,4 +34,10 @@ public interface Store {
     void changePassword(int id, String password);
 
     Collection<City> findAllCities();
+
+    Optional<City> findCityById(int id);
+
+    Collection<Candidate> findCandidatesByDay();
+
+    Collection<Post> findPostsByDay();
 }

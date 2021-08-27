@@ -2,6 +2,8 @@
 <%@ page import="ru.job4j.dream.store.PsqlStore" %>
 <%@ page import="ru.job4j.dream.model.Post" %>
 <%@ page import="ru.job4j.dream.model.Candidate" %>
+<%@ page import="ru.job4j.dream.model.City" %>
+<%@ page import="java.util.Collection" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jstl/core" %>
 <!doctype html>
 <html lang="en">
@@ -22,8 +24,10 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
             integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
             crossorigin="anonymous"></script>
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <title>Работа мечты</title>
+</head>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js" ></script>
 
     <script>
     function validate() {
@@ -33,20 +37,35 @@
         alert("Not filled: " + name.attr('id'));
         return false;
         }
-        if (cityId.val() === 0) {
+        if (cityId.val() === '0') {
         alert("Not filled: " + cityId.attr("id"));
         return false;
         }
         return true;
     }
+
+    $(document).ready (function() {
+        $.ajax({
+            type: "GET",
+            url: 'http://localhost:8080/dreamjob/city',
+            dataType: "json"
+        }).done(function(data) {
+            for (let i = 0; i < data.length; i++) {
+                $('#cityId').append('<option value="' + data[i].id + '">' + data[i].name + '</option>');
+            }
+        }).fail(function () {
+            alert("При выполнении запроса произошла ошибка :(");
+        })
+    });
     </script>
-</head>
 <body>
 <%
     String id = request.getParameter("id");
     Candidate candidate = new Candidate(0, "", 0);
+    City city = new City(0, "");
     if (id != null) {
         candidate = (PsqlStore.instOf().findCandidateById(Integer.valueOf(id))).get();
+        city = (PsqlStore.instOf().findCityById(candidate.getCity())).get();
     }
 %>
 <div class="container">
@@ -93,11 +112,11 @@
                     <div class="form-group">
                         <label for="cityId">Город</label>
                         <select class="form-control" id="cityId" name="cityId">
-                            <c:forEach items="${cities}" var="city">
-                                <option value="${city.id}">
-                                    <c:out value="${city.name}"/>
-                                <option>
-                            </c:forEach>
+                            <% if (id == null) { %>
+                            <option value="0">Город не выбран...</option>
+                            <% } else { %>
+                            <option value="<%=candidate.getCity()%>"><%=city.getName()%></option>
+                            <% } %>
                         </select>
                     </div>
                     <button type="submit" class="btn btn-primary" onclick="return validate();">Сохранить</button>

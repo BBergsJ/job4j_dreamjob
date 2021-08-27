@@ -23,6 +23,17 @@
             crossorigin="anonymous"></script>
 
     <title>Работа мечты</title>
+
+    <script>
+        function validate() {
+            const name = $('#name');
+            if (name.val() === '') {
+                alert("Not filled: " + name.attr('id'));
+                return false;
+            }
+            return true;
+        }
+    </script>
 </head>
 <body>
 <%
@@ -71,9 +82,9 @@
                 <form action="<%=request.getContextPath()%>/posts.do?id=<%=post.getId()%>" method="post">
                     <div class="form-group">
                         <label>Имя</label>
-                        <input type="text" class="form-control" name="name" value="<%=post.getName()%>">
+                        <input type="text" class="form-control" name="name" value="<%=post.getName()%>" id="name">
                     </div>
-                    <button type="submit" class="btn btn-primary">Сохранить</button>
+                    <button type="submit" class="btn btn-primary" onclick="return validate();">Сохранить</button>
                 </form>
             </div>
         </div>
