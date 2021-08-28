@@ -37,11 +37,13 @@ public class CandidateServletTest {
 
         PowerMockito.when(req.getParameter("id")).thenReturn("1");
         PowerMockito.when(req.getParameter("name")).thenReturn("Candidate");
+        PowerMockito.when(req.getParameter("cityId")).thenReturn("5");
 
         new CandidateServlet().doPost(req, resp);
 
         Candidate result = store.findAllCandidates().iterator().next();
         Assert.assertThat(result.getName(), Is.is("Candidate"));
         Assert.assertThat(result.getId(), Is.is(1));
+        Assert.assertThat(result.getCity(), Is.is(5));
     }
 }
