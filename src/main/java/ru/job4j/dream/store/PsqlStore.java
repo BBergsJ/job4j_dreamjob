@@ -72,13 +72,15 @@ public class PsqlStore implements Store {
     public Collection<Candidate> findAllCandidates() {
         List<Candidate> candidates = new ArrayList<>();
         try (Connection cn = pool.getConnection();
-        PreparedStatement ps = cn.prepareStatement("SELECT * FROM candidate")
+        PreparedStatement ps = cn.prepareStatement("SELECT candidate.id, candidate.name, candidate.cityid,"
+                + " c.name AS city FROM candidate LEFT JOIN city c ON candidate.cityid = c.id")
         ) {
             try (ResultSet it = ps.executeQuery()) {
                 while (it.next()) {
                     candidates.add(new Candidate(it.getInt("id"),
                             it.getString("name"),
-                            it.getInt("cityId")));
+                            new City(it.getInt("cityId"), it.getString("city"))
+                    ));
                 }
             }
         } catch (Exception e) {
@@ -127,7 +129,7 @@ public class PsqlStore implements Store {
                      PreparedStatement.RETURN_GENERATED_KEYS)
         ) {
             ps.setString(1, candidate.getName());
-            ps.setInt(2, candidate.getCity());
+            ps.setInt(2, candidate.getCity().getId());
             ps.execute();
             try (ResultSet id = ps.getGeneratedKeys()) {
                 if (id.next()) {
@@ -155,7 +157,7 @@ public class PsqlStore implements Store {
         try (Connection cn = pool.getConnection();
              PreparedStatement ps = cn.prepareStatement("UPDATE candidate SET name = ?, cityid = ? WHERE id = ?")) {
             ps.setString(1, candidate.getName());
-            ps.setInt(2, candidate.getCity());
+            ps.setInt(2, candidate.getCity().getId());
             ps.setInt(3, candidate.getId());
             ps.executeUpdate();
         } catch (Exception e) {
@@ -184,12 +186,16 @@ public class PsqlStore implements Store {
     public Optional<Candidate> findCandidateById(int id) {
         Optional<Candidate> candidate = Optional.empty();
         try (Connection cn = pool.getConnection();
-             PreparedStatement ps = cn.prepareStatement("SELECT * FROM candidate WHERE id = ?")) {
+             PreparedStatement ps = cn.prepareStatement("SELECT candidate.id, candidate.name, candidate.cityid, "
+                     + "c.name AS city FROM candidate LEFT JOIN city c ON candidate.cityid = c.id "
+                    + "WHERE candidate.id = ?")) {
             ps.setInt(1, id);
             try (ResultSet it = ps.executeQuery()) {
                 if (it.next()) {
-                    candidate = Optional.of(new Candidate(id, it.getString("name"),
-                            it.getInt("cityId")));
+                    candidate = Optional.of(new Candidate(it.getInt("id"),
+                            it.getString("name"),
+                            new City(it.getInt("cityId"), it.getString("city"))
+                    ));
                 }
             }
         } catch (Exception e) {
@@ -375,14 +381,17 @@ public class PsqlStore implements Store {
     public Collection<Candidate> findCandidatesByDay() {
         List<Candidate> candidates = new ArrayList<>();
         try (Connection cn = pool.getConnection();
-             PreparedStatement ps = cn.prepareStatement("SELECT * FROM candidate WHERE "
-                     + "dateCreated BETWEEN now() - INTERVAL '1 day' AND now()")
+             PreparedStatement ps = cn.prepareStatement(
+                     "SELECT candidate.id, candidate.name, candidate.cityid, c.name AS city "
+                             + "FROM candidate LEFT JOIN city c ON candidate.cityid = c.id "
+                             + "WHERE dateCreated BETWEEN now() - INTERVAL '1 day' AND now()")
         ) {
             try (ResultSet resultSet = ps.executeQuery()) {
                 while (resultSet.next()) {
                     candidates.add(new Candidate(resultSet.getInt("id"),
                             resultSet.getString("name"),
-                            resultSet.getInt("cityId")));
+                            new City(resultSet.getInt("cityId"), resultSet.getString("city"))
+                    ));
                 }
             }
         } catch (Exception e) {

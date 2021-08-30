@@ -61,11 +61,9 @@
 <body>
 <%
     String id = request.getParameter("id");
-    Candidate candidate = new Candidate(0, "", 0);
-    City city = new City(0, "");
+    Candidate candidate = new Candidate(0, "", new City(0, ""));
     if (id != null) {
         candidate = (PsqlStore.instOf().findCandidateById(Integer.valueOf(id))).get();
-        city = (PsqlStore.instOf().findCityById(candidate.getCity())).get();
     }
 %>
 <div class="container">
@@ -115,7 +113,7 @@
                             <% if (id == null) { %>
                             <option value="0">Город не выбран...</option>
                             <% } else { %>
-                            <option value="<%=candidate.getCity()%>"><%=city.getName()%></option>
+                            <option value="<%=candidate.getCity().getId()%>"><%=candidate.getCity().getName()%></option>
                             <% } %>
                         </select>
                     </div>

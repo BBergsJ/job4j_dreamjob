@@ -59,6 +59,7 @@
                     <thead>
                     <tr>
                         <th scope="col">Названия</th>
+                        <th scope="col">Описание</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -66,6 +67,9 @@
                         <tr>
                             <td>
                                 <c:out value="${post.name}"/>
+                            </td>
+                            <td>
+                                <c:out value="${post.description}"/>
                             </td>
                         </tr>
                     </c:forEach>
@@ -85,6 +89,7 @@
                     <thead>
                     <tr>
                         <th scope="col">Имя</th>
+                        <th scope="col">Город</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -92,6 +97,9 @@
                         <tr>
                             <td>
                                 <c:out value="${candidate.name}"/>
+                            </td>
+                            <td>
+                                <c:out value="${candidate.city.name}"/>
                             </td>
                         </tr>
                     </c:forEach>
