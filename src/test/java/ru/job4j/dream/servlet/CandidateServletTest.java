@@ -44,6 +44,7 @@ public class CandidateServletTest {
         Candidate result = store.findAllCandidates().iterator().next();
         Assert.assertThat(result.getName(), Is.is("Candidate"));
         Assert.assertThat(result.getId(), Is.is(1));
-        Assert.assertThat(result.getCity(), Is.is(5));
+        Assert.assertThat(result.getCity().getId(), Is.is(5));
+        Assert.assertThat(result.getCity().getName(), Is.is("Milano"));
     }
 }

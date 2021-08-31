@@ -125,7 +125,7 @@ public class MemStore implements Store {
 
     @Override
     public Optional<City> findCityById(int id) {
-        return Optional.empty();
+        return Optional.of(new City(5, "Milano"));
     }
 
     @Override
